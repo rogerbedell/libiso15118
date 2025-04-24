@@ -73,14 +73,13 @@ template <> void convert(const struct iso20_PowerDeliveryResType& in, PowerDeliv
 // End conversion for deserializing a PowerDeliveryResponse (EVside)
 
 // Begin conversion for serializing a PowerDeliveryResponse (EVSEside)
-template <> void convert(const datatypes::PowerToleranceAcceptance& in, iso20_powerToleranceAcceptanceType& out) {
-    cb_convert_enum(in, out);
-}
-
 template <> void convert(const datatypes::Scheduled_EVPPTControlMode& in, iso20_Scheduled_EVPPTControlModeType& out) {
     init_iso20_Scheduled_EVPPTControlModeType(&out);
 
-    CPP2CB_CONVERT_IF_USED(in.power_tolerance_acceptance, out.PowerToleranceAcceptance);
+    if (in.power_tolerance_acceptance) {
+        cb_convert_enum(in.power_tolerance_acceptance.value(), out.PowerToleranceAcceptance);
+        out.PowerToleranceAcceptance_isUsed = true;
+    }
     out.SelectedScheduleTupleID = in.selected_schedule;
 }
 
@@ -144,18 +143,16 @@ template <> size_t serialize(const PowerDeliveryResponse& in, const io::StreamOu
 // End conversion for serializing a PowerDeliveryResponse (EVSEside)
 
 // Begin conversion for serializing a PowerDeliveryRequest (EVside)
-template <> void convert(const datatypes::ChannelSelection& in, iso20_channelSelectionType& out) {
-    cb_convert_enum(in, out);
-}
-
 template <> void convert(const PowerDeliveryRequest& in, iso20_PowerDeliveryReqType& out) {
     init_iso20_PowerDeliveryReqType(&out);
 
     cb_convert_enum(in.charge_progress, out.ChargeProgress);
     cb_convert_enum(in.processing, out.EVProcessing);
     CPP2CB_CONVERT_IF_USED(in.power_profile, out.EVPowerProfile);
-    CPP2CB_CONVERT_IF_USED(in.channel_selection, out.BPT_ChannelSelection);
-
+    if (in.channel_selection) {
+        cb_convert_enum(in.channel_selection.value(), out.BPT_ChannelSelection);
+        out.BPT_ChannelSelection_isUsed = true;
+    }
     convert(in.header, out.Header);
 }
 

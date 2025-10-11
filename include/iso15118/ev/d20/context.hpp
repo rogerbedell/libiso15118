@@ -11,6 +11,7 @@
 #include <iso15118/message/variant.hpp>
 
 #include <iso15118/ev/d20/session.hpp>
+#include <iso15118/ev/session/feedback.hpp>
 
 namespace iso15118::ev::d20 {
 
@@ -57,7 +58,7 @@ class Session;
 
 class Context {
 public:
-    Context(MessageExchange&);
+    Context(session::feedback::Callbacks, MessageExchange&);
 
     template <typename StateType, typename... Args> BasePointerType create_state(Args&&... args) {
         return std::make_unique<StateType>(*this, std::forward<Args>(args)...);
@@ -107,8 +108,10 @@ public:
     }
 
     // Contains the EVSE received data
-    EVSESessionInfo session_evse_info;
+    EVSESessionInfo evse_session_info;
     EVSEInformation evse_info;
+
+    const iso15118::ev::d20::session::Feedback feedback;
 
 private:
     MessageExchange& message_exchange;

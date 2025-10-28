@@ -76,7 +76,8 @@ Result Authorization::feed(Event ev) {
             // We might want to feedback the supported services to the user via the feedback interface, and
             // then listen for a user selection?
             // For now, just ask for MCS since this is what I'm most interested in testing
-            req.supported_service_ids = std::vector<uint16_t>{message_20::to_underlying_value(message_20::datatypes::ServiceCategory::MCS)};
+            req.supported_service_ids =
+                std::vector<uint16_t>{message_20::to_underlying_value(message_20::datatypes::ServiceCategory::MCS)};
 
             m_ctx.respond(req);
             return m_ctx.create_state<ServiceDiscovery>();

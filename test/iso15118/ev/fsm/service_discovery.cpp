@@ -29,15 +29,13 @@ SCENARIO("ISO15118-20 EV ServiceDiscovery state transitions") {
         ctx.get_session().set_id(header.session_id);
 
         fsm::v2::FSM<ev::d20::StateBase> fsm{ctx.create_state<ev::d20::state::ServiceDiscovery>()};
-        const auto res = message_20::ServiceDiscoveryResponse{
-            header, message_20::datatypes::ResponseCode::OK, false,
-            message_20::datatypes::ServiceList{{
-                message_20::datatypes::ServiceCategory::MCS, // service_id
-                false                                       // free_service
-            }}, std::nullopt
-        };
-
-
+        const auto res =
+            message_20::ServiceDiscoveryResponse{header, message_20::datatypes::ResponseCode::OK, false,
+                                                 message_20::datatypes::ServiceList{{
+                                                     message_20::datatypes::ServiceCategory::MCS, // service_id
+                                                     false                                        // free_service
+                                                 }},
+                                                 std::nullopt};
 
         state_helper.handle_response(res);
 

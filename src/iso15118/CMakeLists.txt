@@ -20,6 +20,7 @@ target_sources(iso15118
         ev/d20/state/dc_charge_parameter_discovery.cpp
         ev/d20/state/service_discovery.cpp
         ev/d20/state/service_detail.cpp
+        ev/d20/state/service_selection.cpp
         ev/session/feedback.cpp
 
         io/connection_plain.cpp

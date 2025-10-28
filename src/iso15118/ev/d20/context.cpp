@@ -3,6 +3,8 @@
 #include <iso15118/detail/helper.hpp>
 #include <iso15118/ev/d20/context.hpp>
 #include <iso15118/ev/detail/d20/context_helper.hpp>
+#include <iso15118/message/common_types.hpp>
+#include <iso15118/message/service_detail.hpp>
 
 namespace iso15118::ev::d20 {
 

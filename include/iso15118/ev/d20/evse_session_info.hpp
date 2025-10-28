@@ -12,6 +12,9 @@ struct EVSESessionInfo {
     bool certificate_installation_service{false};
     std::optional<std::vector<message_20::datatypes::Name>> supported_providers{std::nullopt};
     message_20::datatypes::GenChallenge gen_challenge{std::array<uint8_t, 16>{}}; // 16 bytes
+
+    // MCS specific
+    std::optional<message_20::datatypes::McsParameterList> mcs_parameter_list{std::nullopt};
 };
 
 } // namespace iso15118::ev::d20

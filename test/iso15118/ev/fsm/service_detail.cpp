@@ -5,9 +5,9 @@
 #include "helper.hpp"
 
 #include <iso15118/ev/d20/state/service_detail.hpp>
+#include <iso15118/message/common_types.hpp>
 #include <iso15118/message/service_detail.hpp>
 #include <iso15118/message/type.hpp>
-#include <iso15118/message/common_types.hpp>
 
 using namespace iso15118;
 
@@ -36,13 +36,12 @@ SCENARIO("ISO15118-20 EV ServiceDetail state transitions") {
             .mobility_needs_mode = message_20::datatypes::MobilityNeedsMode::ProvidedByEvcc,
             .pricing = message_20::datatypes::Pricing::NoPricing,
         };
-        const auto res =
-            message_20::ServiceDetailResponse{header, message_20::datatypes::ResponseCode::OK,
-                                              message_20::to_underlying_value(message_20::datatypes::ServiceCategory::MCS),
-                                              message_20::datatypes::ServiceParameterList{
-                                                    message_20::datatypes::ParameterSet{
-                                                        0, mcs_params},
-                                                }};
+        const auto res = message_20::ServiceDetailResponse{
+            header, message_20::datatypes::ResponseCode::OK,
+            message_20::to_underlying_value(message_20::datatypes::ServiceCategory::MCS),
+            message_20::datatypes::ServiceParameterList{
+                message_20::datatypes::ParameterSet{0, mcs_params},
+            }};
         state_helper.handle_response(res);
 
         const auto result = fsm.feed(ev::d20::Event::V2GTP_MESSAGE);
@@ -58,8 +57,7 @@ SCENARIO("ISO15118-20 EV ServiceDetail state transitions") {
             REQUIRE(request.header.session_id == header.session_id);
 
             // Check that the requested service is MCS
-            REQUIRE(request.selected_energy_transfer_service.service_id ==
-                    message_20::datatypes::ServiceCategory::MCS);
+            REQUIRE(request.selected_energy_transfer_service.service_id == message_20::datatypes::ServiceCategory::MCS);
             REQUIRE(request.selected_energy_transfer_service.parameter_set_id == 0);
         }
     }

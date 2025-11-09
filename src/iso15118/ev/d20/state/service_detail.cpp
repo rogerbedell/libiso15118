@@ -52,6 +52,10 @@ Result ServiceDetail::feed([[maybe_unused]] Event ev) {
         req.selected_energy_transfer_service.service_id =
             static_cast<message_20::datatypes::ServiceCategory>(res->service);
 
+        // TODO(RB) Save the selected parameters in the context in case we need them later, e.g., for scheduling
+        //        m_ctx.save_selected_service_parameters(res->service_parameter_list,
+        //                                              req.selected_energy_transfer_service.service_id);
+
         // Todo(RB): Handle VAS selection if needed
         m_ctx.respond(req);
         return m_ctx.create_state<ServiceSelection>();
